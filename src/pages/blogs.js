@@ -23,6 +23,7 @@ const LoginSchema = Yup.object().shape({
 class Blogs extends React.Component {
     render() {
         return (
+            
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">

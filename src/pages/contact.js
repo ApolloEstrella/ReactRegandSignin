@@ -3,6 +3,10 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.css";
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from '../features/counter/counterSlice';
+
+
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -20,8 +24,11 @@ const LoginSchema = Yup.object().shape({
     })
 });
 
-class Contact extends React.Component {
-    render() {
+
+const Contact = () =>  {
+    const count = useSelector((state) => state.counter.value)
+    const username = useSelector((state) => state.counter.username)
+    const dispatch = useDispatch()
         return (
             <div className="container">
                 <div className="row">
@@ -31,13 +38,19 @@ class Contact extends React.Component {
                             validationSchema={LoginSchema}
                             onSubmit={(values) => {
                                 console.log(values);
+                                //dispatch(increment("jane"));
+                                 
+                                dispatch(increment({ type: "ACTIVITY", username: values.email }));
+
+
+
                                 //this.isSubmitting = false;
                                 //alert("Form is validated! Submitting the form...");
                             }}
                         >
                             {({ touched, errors, isSubmitting, values }) =>
                                 !isSubmitting ? (
-                                    <div>
+                                    <div> 
                                         <div className="row mb-5">
                                             <div className="col-lg-12 text-center">
                                                 <h1 className="mt-5">Signin</h1>
@@ -104,7 +117,7 @@ class Contact extends React.Component {
                 </div>
             </div>
         );
-    }
+     
 }
 
 export default Contact;
